@@ -38,7 +38,7 @@ jobs:
 
     - name: Test
       run: dotnet test --configuration Release --no-restore --no-build --verbosity normal -- --results-directory ./TestResults --report-trx --coverage --coverage-output-format cobertura --coverage-output tests.cobertura.xml --report-trx-filename tests.trx
-        
+ 
     - name: Publish coverage report to coveralls.io
       uses: coverallsapp/github-action@v2
       if: ${{ always() && github.event_name == 'push' }}
