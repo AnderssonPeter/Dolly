@@ -45,20 +45,19 @@ public sealed partial class SimpleClass
         var generated = SourceTextConverter.ToSourceText(model);
         var expected =
             """
-            using Dolly;
-            using System.Linq;
+            using global::System.Linq;
             namespace Dolly;
-            partial class SimpleClass : IClonable<SimpleClass>
+            partial class SimpleClass : global::Dolly.IClonable<SimpleClass>
             {
-                object ICloneable.Clone() => this.DeepClone();
-                public SimpleClass DeepClone() =>
+                object global::System.ICloneable.Clone() => this.DeepClone();
+                public global::Dolly.SimpleClass DeepClone() =>
                     new ()
                     {
                         First = First,
                         Second = Second
                     };
 
-                public SimpleClass ShallowClone() =>
+                public global::Dolly.SimpleClass ShallowClone() =>
                     new ()
                     {
                         First = First,
@@ -81,19 +80,18 @@ public sealed partial record SimpleClass(string Foo);
         var generated = SourceTextConverter.ToSourceText(model);
         var expected =
             """
-            using Dolly;
-            using System.Linq;
+            using global::System.Linq;
             namespace Dolly;
-            partial record SimpleClass : IClonable<SimpleClass>
+            partial record SimpleClass : global::Dolly.IClonable<SimpleClass>
             {
-                object ICloneable.Clone() => this.DeepClone();
-                public SimpleClass DeepClone() =>
+                object global::System.ICloneable.Clone() => this.DeepClone();
+                public global::Dolly.SimpleClass DeepClone() =>
                     new (Foo)
                     {
 
                     };
 
-                public SimpleClass ShallowClone() =>
+                public global::Dolly.SimpleClass ShallowClone() =>
                     new (Foo)
                     {
 
