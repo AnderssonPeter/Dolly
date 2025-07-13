@@ -18,19 +18,18 @@ namespace Dolly
         public static SourceText ToSourceText(Model model)
         {
             return SourceText.From($$"""
-                    using Dolly;
-                    using System.Linq;
+                    using global::System.Linq;
                     namespace {{model.Namespace}};
-                    {{model.GetModifiers()}} {{model.Name}} : IClonable<{{model.Name}}>
+                    {{model.GetModifiers()}} {{model.Name}} : global::Dolly.IClonable<{{model.Name}}>
                     {
-                        {{(!model.HasClonableBaseClass ? "object ICloneable.Clone() => this.DeepClone();" : "")}}
-                        public {{model.GetMethodModifiers()}}{{model.Name}} DeepClone() =>
+                        {{(!model.HasClonableBaseClass ? "object global::System.ICloneable.Clone() => this.DeepClone();" : "")}}
+                        public {{model.GetMethodModifiers()}}global::{{model.Namespace}}.{{model.Name}} DeepClone() =>
                             new ({{string.Join(", ", model.Constructor.Select(m => m.ToString(true)))}})
                             {
                     {{GenerateCloneMembers(model, true)}}
                             };
 
-                        public {{model.GetMethodModifiers()}}{{model.Name}} ShallowClone() =>
+                        public {{model.GetMethodModifiers()}}global::{{model.Namespace}}.{{model.Name}} ShallowClone() =>
                             new ({{string.Join(", ", model.Constructor.Select(m => m.ToString(false)))}})
                             {
                     {{GenerateCloneMembers(model, false)}}
