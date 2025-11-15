@@ -1,3 +1,5 @@
+using FastCloner.SourceGenerator.Shared;
+
 namespace Dolly.Benchmarks;
 
 public class SimpleClassBase
@@ -6,6 +8,7 @@ public class SimpleClassBase
 }
 
 [Clonable]
+[FastClonerClonable]
 public partial class SimpleClass : SimpleClassBase
 {
     public int Int { get; set; }
@@ -18,6 +21,7 @@ public partial class SimpleClass : SimpleClassBase
 }
 
 [Clonable]
+[FastClonerClonable]
 public partial class ComplexClass
 {
     public SimpleClass SimpleClass { get; set; }

@@ -6,6 +6,7 @@ using NClone;
 namespace Dolly.Benchmarks;
 
 [MemoryDiagnoser]
+[Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
 public class CloneBenchmarks
 {
     private readonly ComplexClass _complexClass;
@@ -89,8 +90,8 @@ public class CloneBenchmarks
         DeepClonerExtensions.DeepClone(_complexClass);
     }
 
-    [Benchmark(Description = "FastCloner")]
-    public void TestFastCloner()
+    [Benchmark(Description = "FastDeepCloner")]
+    public void TestFastDeepCloner()
     {
         var clone = FastDeepCloner.DeepCloner.Clone(_complexClass);
     }
@@ -105,5 +106,11 @@ public class CloneBenchmarks
     public void TestAnyClone()
     {
         var clone = AnyClone.CloneExtensions.Clone(_complexClass);
+    }
+    
+    [Benchmark(Description = "FastCloner")]
+    public void TestFastCloner()
+    {
+        var clone = _complexClass.FastDeepClone();
     }
 }
